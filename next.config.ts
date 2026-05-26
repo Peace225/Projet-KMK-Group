@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com" },
     ],
   },
+
   // Désactiver le type-checking et linting au build (déjà vérifiés en local)
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
