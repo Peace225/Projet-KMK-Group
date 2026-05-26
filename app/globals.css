@@ -1,8 +1,9 @@
+/* 1. L'import des polices doit TOUJOURS être la première ligne du fichier */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
 
 :root {
   --font-inter: 'Inter', sans-serif;
@@ -41,6 +42,22 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+}
+
+/* --- SUPPRESSION DU TOUT NOUVEAU BADGE COMPILATION NEXT.JS 15.5 --- */
+next-route-announcer,
+[data-nextjs-scroll-focus-boundary],
+[id^="nextjs"],
+[class^="nextjs"],
+div[style*="z-index: 2147483647"],
+div[style*="position: fixed"] > button[aria-label*="Next.js"],
+div[style*="position: fixed"] > div:has(button[aria-label*="Next.js"]) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* Scrollbar */
