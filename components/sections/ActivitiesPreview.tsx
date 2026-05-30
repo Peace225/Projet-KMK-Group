@@ -32,8 +32,8 @@ const activityLabels: Record<string, { fr: string; en: string; descFr: string; d
     descFr: "50 000 arbres plantés",
     descEn: "50,000 trees planted",
   },
-  "location-voitures": {
-    fr: "Location de Voitures",
+  "location-voitures": { // Clé mise à jour pour correspondre au tableau ci-dessous
+    fr: "Location & vente de Voitures",
     en: "Car Rental",
     descFr: "Flotte de véhicules modernes",
     descEn: "Fleet of modern vehicles",
@@ -53,17 +53,16 @@ export default function ActivitiesPreview() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   const activities = [
-    { icon: Sprout, key: "agriculture", image: "/images/agriculture.jpg" },
-    { icon: Beef, key: "elevage", image: "/images/elevage-boeuf.jpg" },
-    { icon: Building2, key: "construction", image: "/images/btp.jpg" },
-    { icon: Trees, key: "reboisement", image: "/images/reboisement.jpg" },
-    { icon: Car, key: "location-voitures", image: "/images/location-voiture.jpg" },
-    { icon: Megaphone, key: "audiovisuel", image: "/images/panneau_pub.jpg" },
+    { icon: Sprout, key: "agriculture", image: "/images/agri.jpg" },
+    { icon: Beef, key: "elevage", image: "/images/boeuf.jpg" },
+    { icon: Building2, key: "construction", image: "/images/maison.jpg" },
+    { icon: Trees, key: "reboisement", image: "/images/climat.jpg" },
+    { icon: Car, key: "location-voitures", image: "/images/voiture.jpg" },
+    { icon: Megaphone, key: "audiovisuel", image: "/images/pub.jpg" },
   ];
 
   return (
     <section ref={ref} className="relative py-32 bg-[#FAF9F5] overflow-hidden">
-      {/* Subtile structure linéaire en arrière-plan */}
       <div className="absolute inset-0 flex justify-between max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pointer-events-none opacity-5">
         <div className="w-[1px] h-full bg-primary-950" />
         <div className="w-[1px] h-full bg-primary-950 hidden lg:block" />
@@ -71,8 +70,6 @@ export default function ActivitiesPreview() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        
-        {/* En-tête de section Éditorial */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -93,10 +90,13 @@ export default function ActivitiesPreview() {
           <div className="w-12 h-[1px] bg-primary-600/40 mt-8" />
         </motion.div>
 
-        {/* Grille d'Exposition Asymétrique */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {activities.map((activity, i) => {
             const label = activityLabels[activity.key];
+            
+            // Sécurité : si la clé n'existe pas, on ignore l'élément plutôt que de faire planter
+            if (!label) return null;
+
             return (
               <motion.div
                 key={activity.key}
@@ -106,41 +106,29 @@ export default function ActivitiesPreview() {
               >
                 <Link href={`/${locale}/activities#${activity.key}`}>
                   <div className="group relative overflow-hidden bg-[#1A241F] h-[420px] cursor-pointer rounded-none border border-primary-900/5 shadow-[0_30px_60px_rgba(26,36,31,0.02)] will-change-transform transition-all duration-500 hover:shadow-[0_40px_80px_rgba(26,36,31,0.08)]">
-                    
-                    {/* Image Réaliste avec Parallaxe Discret / Zoom Épuré */}
                     <div
                       className="absolute inset-0 bg-cover bg-center opacity-70 filter grayscale-[20%] contrast-[105%] transition-transform duration-[2000ms] ease-out group-hover:scale-105 group-hover:opacity-55"
                       style={{ backgroundImage: `url('${activity.image}')` }}
                     />
-                    
-                    {/* Gradient Sombre Linéaire De Prestige */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1A241F] via-[#1A241F]/40 to-transparent opacity-90 transition-opacity duration-500 group-hover:via-[#1A241F]/50" />
-                    
-                    {/* Lignes fines décoratives intérieures s'activant au survol */}
                     <div className="absolute inset-4 border border-white/0 pointer-events-none transition-all duration-700 group-hover:border-white/10" />
 
-                    {/* Contenu textuel */}
                     <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
-                      
-                      {/* Conteneur Icône Épuré */}
                       <div className="mb-4 transform translate-y-4 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
                         <div className="w-10 h-10 bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
                           <activity.icon size={18} strokeWidth={1.2} className="text-white" />
                         </div>
                       </div>
 
-                      {/* Titre en Lettres Capitales Fines */}
                       <h3 className="text-white font-sans font-normal text-lg uppercase tracking-[0.15em] mb-3 flex items-center justify-between w-full">
                         <span>{locale === "fr" ? label.fr : label.en}</span>
                         <ArrowUpRight size={16} className="text-white/40 transform -translate-x-2 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100" />
                       </h3>
 
-                      {/* Description Fine */}
                       <p className="text-white/60 font-sans font-light text-xs tracking-wide leading-relaxed max-w-xs transition-colors duration-300 group-hover:text-white/80">
                         {locale === "fr" ? label.descFr : label.descEn}
                       </p>
                     </div>
-
                   </div>
                 </Link>
               </motion.div>
@@ -148,7 +136,6 @@ export default function ActivitiesPreview() {
           })}
         </div>
 
-        {/* Bouton d'action minimaliste à bords droits */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -168,7 +155,6 @@ export default function ActivitiesPreview() {
             </Button>
           </Link>
         </motion.div>
-
       </div>
     </section>
   );

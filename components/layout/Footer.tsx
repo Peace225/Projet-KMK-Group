@@ -101,11 +101,11 @@ export default function Footer() {
               </li>
               <li className="flex gap-3">
                 <Phone size={16} className="text-primary-400 mt-0.5 shrink-0" />
-                <span>+225 01 02 27 28 50 / +225 01 73 91 26 26</span>
+                <span>+225 05 55 58 22 74 / +225 01 73 91 26 26</span>
               </li>
               <li className="flex gap-3">
                 <Mail size={16} className="text-primary-400 mt-0.5 shrink-0" />
-                <span>info@kmkgroup.com</span>
+                <span>info@kmkgroupsarl.com</span>
               </li>
               <li className="flex gap-3">
                 <Clock size={16} className="text-primary-400 mt-0.5 shrink-0" />

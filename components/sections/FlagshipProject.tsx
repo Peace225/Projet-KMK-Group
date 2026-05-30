@@ -89,7 +89,7 @@ export default function FlagshipProject() {
             {/* Conteneur principal sans arrondi style Beaux-Arts */}
             <div className="relative w-full h-full overflow-hidden shadow-[0_30px_60px_rgba(26,36,31,0.06)] border border-primary-900/5">
               <Image
-                src="/images/agriculture-moderne.jpg"
+                src="/images/prj.jpg"
                 alt="Projet agricole KMK GROUP"
                 fill
                 priority
