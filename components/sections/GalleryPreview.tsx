@@ -27,7 +27,7 @@ export default function GalleryPreview() {
     { src: "/images/poto.jpg", alt: "Écosystème KMK", span: "col-span-1" },
     { src: "/images/pin.jpg", alt: "Écosystème KMK", span: "col-span-1" },
     { src: "/images/oberg.jpg", alt: "Écosystème KMK", span: "col-span-1" },
-    { src: "/images/galerry/imag.jpg", alt: locale === "fr" ? "Élevage Moderne" : "Modern Livestock", span: "col-span-1" },
+    { src: "/images/galerry/Poussins.jpg", alt: locale === "fr" ? "Élevage Moderne" : "Modern Livestock", span: "col-span-1" },
     { src: "/images/galerry/image.jpg", alt: locale === "fr" ? "Champs verdoyants" : "Green Fields", span: "md:col-span-2 md:row-span-1" },
     { src: "/images/galerry/image3.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
     { src: "/images/galerry/image4.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
