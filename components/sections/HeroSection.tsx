@@ -1,16 +1,37 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { ArrowUpRight, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Liste des images pour le carrousel
+const images = [
+  "/images/hero/image.jpg",
+  "/images/hero/image1.jpg", // Ajoutez vos autres images ici
+  "/images/hero/boeufs.jpg",
+  "/images/hero/image2.jpg",
+  "/images/hero/image3.jpg",
+  "/images/hero/image4.jpg",
+  "/images/hero/image5.jpg",
+];
+
 export default function HeroSection() {
   const t = useTranslations("home.hero");
   const locale = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Gestion de l'index du carrousel
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 6000); // Transition fluide synchronisée sur 6 secondes
+    return () => clearInterval(interval);
+  }, []);
 
   // Effet parallaxe discret sur le scroll
   const { scrollY } = useScroll();
@@ -41,21 +62,35 @@ export default function HeroSection() {
       ref={containerRef}
       className="relative min-h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-[#08120a]"
     >
-      {/* Background avec zoom initial lent + Parallaxe au scroll */}
-      <motion.div
-        initial={{ scale: 1.15, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.55 }}
-        transition={{ duration: 2.5, ease: "easeOut" }}
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat will-change-transform"
-        style={{
-          backgroundImage: "url('/images/agriculture/image30.jpg')",
-          y: backgroundY,
-        }}
-      />
+      {/* Carrousel d'images de fond en Slide Premium */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        {images.map((src, index) => {
+          const isActive = currentImageIndex === index;
+          // Préparation de l'effet de slide : suppression du scale 1.1 pour éviter les coupures (zoom trop fort)
+          return (
+            <motion.div
+              key={src}
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ 
+                x: isActive ? "0%" : "-30%",
+                opacity: isActive ? 0.85 : 0 
+              }}
+              transition={{ duration: 2.5, ease: [0.25, 1, 0.5, 1] }} // Courbe de Bézier premium (Cubic Bezier)
+              className="absolute inset-0 bg-no-repeat will-change-transform"
+              style={{
+                backgroundImage: `url('${src}')`,
+                backgroundSize: "cover", // Assure que l'image couvre l'espace
+                backgroundPosition: "center", // Centre l'image pour éviter de couper les bords principaux
+                y: backgroundY,
+              }}
+            />
+          );
+        })}
+      </div>
 
-      {/* Gradients de prestige (Ambiance feutrée Vert Forêt) */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#08120a] via-[#08120a]/60 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#08120a]/90 via-transparent to-[#08120a]/90" />
+      {/* GRADIENTS TRÈS SUBTILS : Juste ce qu'il faut pour assurer le contraste du texte */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#08120a]/40 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#08120a]/30 via-transparent to-[#08120a]/30" />
       
       {/* Halo lumineux "Glow" en arrière-plan */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary-500/15 blur-[140px] rounded-full pointer-events-none" />
@@ -104,7 +139,7 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Titre Principal - NOUVELLE POLICE SANS-SERIF ULTRA MODERNE & IMPOSANTE */}
+        {/* Titre Principal */}
         <motion.h1
           variants={itemVariants}
           className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-sans font-black tracking-tight text-white uppercase mb-6 max-w-5xl leading-[1.05]"
@@ -114,7 +149,7 @@ export default function HeroSection() {
           </span>
         </motion.h1>
 
-        {/* Sous-titre - Garde une touche élégante en Serif Italic pour créer un contraste de textures */}
+        {/* Sous-titre */}
         <motion.p
           variants={itemVariants}
           className="text-xl sm:text-2xl md:text-3xl text-primary-200/90 font-serif italic tracking-wide mb-8 max-w-2xl"

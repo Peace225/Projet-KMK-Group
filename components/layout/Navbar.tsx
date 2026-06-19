@@ -52,7 +52,10 @@ export default function Navbar() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isTransparent ? "bg-transparent" : "bg-white/95 backdrop-blur-md shadow-sm"
+        // Ajout d'un fond vert forêt semi-transparent quand la navbar est transparente sur la home
+        isTransparent 
+          ? "bg-[#08120a]/80 backdrop-blur-md border-b border-white/5" 
+          : "bg-white/95 backdrop-blur-md shadow-sm"
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

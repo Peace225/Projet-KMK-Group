@@ -1,11 +1,11 @@
 ﻿"use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function GalleryPreview() {
@@ -13,6 +13,9 @@ export default function GalleryPreview() {
   const t = useTranslations("gallery");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+
+  // État pour gérer l'image actuellement sélectionnée dans la visionneuse
+  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
 
   const previewImages = [
     { src: "/images/agriculture/image27.jpg", alt: locale === "fr" ? "Production Agricole" : "Agricultural Production", span: "md:col-span-2 md:row-span-2" },
@@ -24,6 +27,19 @@ export default function GalleryPreview() {
     { src: "/images/poto.jpg", alt: "Écosystème KMK", span: "col-span-1" },
     { src: "/images/pin.jpg", alt: "Écosystème KMK", span: "col-span-1" },
     { src: "/images/oberg.jpg", alt: "Écosystème KMK", span: "col-span-1" },
+    { src: "/images/galerry/imag.jpg", alt: locale === "fr" ? "Élevage Moderne" : "Modern Livestock", span: "col-span-1" },
+    { src: "/images/galerry/image.jpg", alt: locale === "fr" ? "Champs verdoyants" : "Green Fields", span: "md:col-span-2 md:row-span-1" },
+    { src: "/images/galerry/image3.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
+    { src: "/images/galerry/image4.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
+    { src: "/images/galerry/image5.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
+    { src: "/images/galerry/image6.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
+    { src: "/images/galerry/image7.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
+    { src: "/images/galerry/image8.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
+    { src: "/images/galerry/image9.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
+    { src: "/images/galerry/Chèvres.jpg", alt: locale === "fr" ? "Elevage" : "Elevage", span: "col-span-1" },
+    { src: "/images/galerry/Boeufs.jpg", alt: locale === "fr" ? "Elevage" : "Elevage", span: "col-span-1" },
+    { src: "/images/galerry/image11.jpg", alt: locale === "fr" ? "Energie Solaire" : "Energie Solaire", span: "col-span-1" },
+    { src: "/images/galerry/Oeufs 1.jpg", alt: locale === "fr" ? "Réalisations BTP" : "Construction Projects", span: "col-span-1" },
   ];
 
   return (
@@ -74,29 +90,76 @@ export default function GalleryPreview() {
               transition={{ duration: 0.6, delay: i * 0.05, ease: "easeOut" }}
               className={`relative overflow-hidden bg-[#1A241F] group border border-primary-900/5 ${img.span || 'col-span-1'}`}
             >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
-              />
-              
-              {/* Voile d'ombrage au survol */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1A241F]/80 via-[#1A241F]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <button
+                onClick={() => setSelectedImage({ src: img.src, alt: img.alt })}
+                className="block w-full h-full relative cursor-zoom-in text-left"
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  className="object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
+                />
+                
+                {/* Voile d'ombrage au survol */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1A241F]/80 via-[#1A241F]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              {/* Cartel de légende */}
-              <div className="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 flex justify-between items-center z-10">
-                <div className="px-4 py-2 bg-[#1A241F]/40 backdrop-blur-md border border-white/10 text-left">
-                  <p className="text-[10px] font-sans font-light tracking-[0.15em] text-white uppercase">
-                    {img.alt}
-                  </p>
+                {/* Cartel de légende */}
+                <div className="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 flex justify-between items-center z-10">
+                  <div className="px-4 py-2 bg-[#1A241F]/40 backdrop-blur-md border border-white/10 text-left">
+                    <p className="text-[10px] font-sans font-light tracking-[0.15em] text-white uppercase">
+                      {img.alt}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </button>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Visionneuse (Lightbox) avec Framer Motion */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/95 backdrop-blur-md p-4 sm:p-8 md:p-12"
+          >
+            {/* Conteneur supérieur forçant le bouton tout au bout à droite */}
+            <div className="w-full max-w-5xl flex justify-end relative h-0">
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="z-50 p-4 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm text-white transition-all duration-300 rounded-full shadow-lg"
+                aria-label="Fermer"
+              >
+                <X size={28} />
+              </button>
+            </div>
+
+            {/* Image affichée en grand */}
+            <div className="relative w-full h-full max-w-5xl max-h-[80vh] flex items-center justify-center">
+              <Image
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                fill
+                sizes="(max-width: 1200px) 100vw, 1200px"
+                className="object-contain rounded-sm shadow-2xl"
+                priority
+              />
+            </div>
+
+            {/* Légende en bas de l'image */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 bg-white/10 border border-white/10 backdrop-blur-md rounded-none">
+              <p className="text-xs font-sans font-light tracking-[0.2em] text-white uppercase">
+                {selectedImage.alt}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

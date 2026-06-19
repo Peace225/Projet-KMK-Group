@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Eye, Target, Leaf, Star, Shield, Zap } from "lucide-react";
+import { Eye, Target, Leaf, Star, Shield, Zap, Quote } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+// Importez votre image locale ici si vous utilisez un bundler ou pointez simplement vers le chemin "/images/..."
+// import ceoImage from "@/public/images/ceo.jpg"; 
 
 const values = [
   { icon: Shield, key: "integrity", color: "bg-blue-100 text-blue-600" },
@@ -14,7 +16,8 @@ const values = [
 ];
 
 const team = [
-  { name: "Directeur Général", role: "CEO", image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=300&q=80" },
+  // 🔥 Modification : Utilisation d'un chemin local statique vers le dossier public
+  { name: "Directeur Général", role: "CEO", image: "/images/ceo.jpeg" },
   { name: "Directrice Financière", role: "CFO", image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&q=80" },
   { name: "Directeur Agricole", role: "Head of Agriculture", image: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=300&q=80" },
   { name: "Directeur Technique", role: "CTO", image: "https://images.unsplash.com/photo-1507152832244-10d45c7eda57?w=300&q=80" },
@@ -83,8 +86,49 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
+      {/* Mot du Directeur / CEO Message */}
       <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }} 
+            transition={{ duration: 0.8 }}
+            className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center bg-gray-50 rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100"
+          >
+            {/* Image du directeur en local */}
+            <div className="md:col-span-4 flex justify-center">
+              <div className="relative w-64 h-64 md:w-56 md:h-56 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+                <Image 
+                  src={team[0].image} 
+                  alt={team[0].name} 
+                  fill 
+                  sizes="(max-width: 768px) 256px, 224px"
+                  priority
+                  className="object-cover" 
+                />
+              </div>
+            </div>
+            
+            {/* Texte et message */}
+            <div className="md:col-span-8 relative">
+              <Quote className="absolute top-0 right-0 text-primary-100 w-24 h-24 -z-10" />
+              <Badge className="mb-4 bg-primary-600 hover:bg-primary-700 text-white">Le mot du CEO</Badge>
+              <h2 className="text-3xl font-display font-bold text-dark mb-4">Message du Directeur Général</h2>
+              <p className="text-gray-600 leading-relaxed mb-6 italic">
+                &quot;Chez KMK GROUP, notre ambition est de conjuguer innovation, excellence et durabilité afin de bâtir des solutions d&apos;avenir. Grâce à l&apos;implication de nos équipes, nous transformons les défis de notre secteur en de véritables opportunités de croissance responsable.&quot;
+              </p>
+              <div>
+                <h4 className="font-bold text-dark text-lg">{team[0].name}</h4>
+                <p className="text-sm text-primary-600 font-medium tracking-wide uppercase">{team[0].role}</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <h2 className="text-3xl font-display font-bold text-dark mb-2">{t("values")}</h2>
@@ -98,7 +142,7 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="text-center p-6 rounded-2xl bg-gray-50 hover:shadow-md transition-shadow"
+                className="text-center p-6 rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className={`inline-flex p-4 rounded-2xl ${v.color} mb-4`}>
                   <v.icon size={28} />
@@ -109,36 +153,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      {/* Team — section temporairement masquée en attente des photos */}
-      {/* 
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl font-display font-bold text-dark mb-2">{t("team")}</h2>
-            <div className="w-16 h-1 bg-primary-600 mx-auto rounded-full" />
-          </motion.div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="text-center"
-              >
-                <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden shadow-lg">
-                  <Image src={member.image} alt={member.name} fill className="object-cover" />
-                </div>
-                <h3 className="font-bold text-dark">{member.name}</h3>
-                <p className="text-sm text-primary-600">{member.role}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-      */}
     </div>
   );
 }

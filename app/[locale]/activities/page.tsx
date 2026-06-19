@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 const BTP_IMGS = ["/images/btp.jpg", "/images/btp1.jpg", "/images/btp2.jpg", "/images/btp3.jpg"];
 const ELEVAGE_IMGS = [
   "/images/elevage.jpg",
-  "/images/elevage-boeuf.jpg", "/images/elevage-boeuf1.jpg", "/images/elevage-boeuf2.jpg",
+  "/images/boeufs.jpg", "/images/boeufs.jpg", "/images/boeufs.jpg",
   "/images/elevage-poulet.jpg", "/images/elevage-poulet1.jpg", "/images/elevage-poulet2.jpg",
 ];
 
@@ -21,7 +21,7 @@ export default function ActivitiesPage() {
   const t = useTranslations("activities");
   const locale = useLocale();
 
-  const elevageImg = "/images/elevage-boeuf.jpg";
+  const elevageImg = "/images/boeufs.jpg";
   const btpImg = "/images/btp.jpg";
 
   const primaryActivities = [

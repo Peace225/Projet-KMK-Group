@@ -26,7 +26,7 @@ type FormData = z.infer<typeof schema>;
 
 const contactInfo = [
   { icon: MapPin, label: "Adresse", value: "Abidjan, Côte d'Ivoire" },
-  { icon: Phone, label: "Téléphone", value: "+225 01 02 27 28 50 / +225 01 73 91 26 26" },
+  { icon: Phone, label: "Téléphone", value: "+225 05 55 58 22 74 / +225 01 73 91 26 26" },
   { icon: Mail, label: "Email", value: "info@kmkgroup.com" },
   { icon: Clock, label: "Horaires", value: "Lun–Ven: 8h–18h" },
 ];
